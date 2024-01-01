@@ -91,7 +91,15 @@ exports.updateContent = async( req, res ) => {
 
             const doc = await Note.findByIdAndUpdate(id, {content : content}, {new : true} );
 
-            res.status(201).json(doc);
+            if( !doc ){
+                res.status(404).json({
+                    success: false,
+                    error: "Data Not found on this ID, Try with anathor ID"
+                })
+            }
+            else{
+                res.status(201).json(doc);
+            }
 
         }
 
